@@ -12,7 +12,7 @@ def run_client(target_ip, target_port, input_file):
     server_address = (target_ip, target_port)
 
     # client waits for ACK. If timeout -> retransmit
-    sock.settimeout(1.0) # 1 second timeout
+    sock.settimeout(0.01) # 10ms second timeout
 
     print(f"[*] Sending file '{input_file}' to {target_ip}:{target_port}")
 
@@ -25,7 +25,7 @@ def run_client(target_ip, target_port, input_file):
             file_data = f.read() # read file
 
         # create chunks with sequence numbers
-        chunk_size = 1400 # bytes per packet data
+        chunk_size = 1450 # bytes per packet data
         chunks = [file_data[i:i+chunk_size] for i in range(0, len(file_data), chunk_size)]
         seq_num = 0
         total_chunks = len(chunks)
