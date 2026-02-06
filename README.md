@@ -35,11 +35,4 @@ Screenshot 4: The result of the Final check.
 
 How does Buffer logic work?
 
-The buffer logic uses an ordered dictionary to manage out-of-order packet arrival. The server tracks which packet 
-it expects next, beginning from zero. If a packet arrives with the expected sequence number, its data is saved and 
-the server moves on to wait for the next number. If a packet arrives too early—with a higher sequence number than 
-expected—the server stores its data in the buffer, keyed by that sequence number. Once the expected packet is 
-received and processed, the server repeatedly checks the buffer for the next consecutive packet. If it finds it, 
-the server removes that buffered data, appends it to the file, and continues checking for the following number in 
-sequence. This process ensures the file is reconstructed in the correct order even when packets are delivered out 
-of sequence.
+The buffer logic uses an ordered dictionary to manage out-of-order packet arrival. The server tracks which packet is expected next, beginning from zero. If a packet arrives with the expected sequence number, the data is saved, and the server moves on to the next number. If a packet is early (has a higher sequence number than expected), the server stores its data in the buffer, keying the sequence number (no header). Once the expected packet is received and processed, the server checks the buffer for the next packet. If found, the server removes the buffer packet, appends it to the file, and continues checking for the next packet in sequence.
